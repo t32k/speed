@@ -1,4 +1,6 @@
 language: ruby
+rvm:
+  - 2.0.0
 script: bundle exec middleman build
 
 env:
@@ -7,7 +9,7 @@ env:
     - GIT_COMMITTER_EMAIL="ijok.ijok@gmail.com"
     - GIT_AUTHOR_NAME="t32k"
     - GIT_AUTHOR_EMAIL="ijok.ijok@gmail.com"
-  	- secure: "OoR9bBT149L9CYUr8s+odzcdSl5yv5OcEhv4GgeRxp2KhDUouzURfYWOdx5VkvqQuBiF+F+iU0M/3YuuioVMXyP0g/MtWbJBlsH2ggAySpwPrG5vvkvReT+/eJ9mYHiARo/HKnhEkNTQNG5tQM1KSGd04bf3j4yj57GnpM0z5r0="
+    - secure: "OoR9bBT149L9CYUr8s+odzcdSl5yv5OcEhv4GgeRxp2KhDUouzURfYWOdx5VkvqQuBiF+F+iU0M/3YuuioVMXyP0g/MtWbJBlsH2ggAySpwPrG5vvkvReT+/eJ9mYHiARo/HKnhEkNTQNG5tQM1KSGd04bf3j4yj57GnpM0z5r0="
 
 before_script:
   - git clone t32k/speed build
