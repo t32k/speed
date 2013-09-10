@@ -1,7 +1,7 @@
 ## gzip圧縮のしくみ
 
-原文：<https://developers.google.com/speed/articles/gzip>
 
+原文：https://developers.google.com/speed/articles/gzip
 著者： Kevin Khaw & Eric Higgins, Google ウェブマスター  
 推奨とされる経験：HTTPとHTMLに関する知識
 
@@ -11,7 +11,7 @@
 
 #### gzip圧縮無しの場合：
 
-![](/images/contents/gzip_off.png)
+![](https://raw.github.com/t32k/speed/master/images/gzip_on.png)
 
 __ブラウザー:__
 
@@ -30,7 +30,7 @@ __ブラウザー:__
 
 #### gzip圧縮有りの場合：
 
-![](/images/contents/gzip_on.png)
+![](https://raw.github.com/t32k/speed/master/images/gzip_off.png)
 
 __ブラウザー:__
 

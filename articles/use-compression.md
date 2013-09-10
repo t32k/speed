@@ -1,10 +1,3 @@
----
-layout: default
-category: articles
-date: 2012-10-16
-title: Web高速化のために圧縮しよう
----
-
 ## Web高速化のために圧縮しよう
 
 原文： <https://developers.google.com/speed/articles/use-compression>  
