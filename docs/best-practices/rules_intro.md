@@ -8,12 +8,12 @@ WebページをPage Speedで調べるとルールに準拠していないもの�
 
 Page Speedはクライアント側からの観点でパフォーマンスを評価し、一般的にページの読み込み時間を計測する。これはユーザーがページをリクエストした瞬間からブラウザによって完全にレンダリングされるまでの経過時間のことを指している。我々が紹介するベストプラクティスはページの読み込みにおける様々なステップをカバーしている。例えば、DNSの名前解決、TCPコネクションの確立、HTTPリクエストの伝達、リソースのダウンロード、キャッシュからのリソース読み込み、スクリプトのパースと実行、ページ上のオブジェクトのレンダリングに至るまでだ。基本的にPage SpeedをWebページで使用することで、それらのステップをちゃんとしているかどうか評価し、読み込みが完了するまでの時間を短縮させることができる。ベストプラクティスは異なる面からページ読み込み最適化カバーする6つのカテゴリに分類されている。
 
-+ [キャッシュの最適化](/t32k/speed/blob/master/docs/best-practices/caching.md) - アプリケーションのデータとロジックをネットワークから完全に分離させる
-+ [ラウンドトリップ時間の縮小化](/t32k/speed/blob/master/docs/best-practices/rtt.md) - リクエスト-レスポンスの一連のサイクルの回数を減らす
-+ [リクエストのオーバーヘッドの縮小化 ](/t32k/speed/blob/master/docs/best-practices/caching.md) - アップロードサイズを減らす
-+ [読み込みサイズの減量](/t32k/speed/blob/master/docs/best-practices/payload.md) - レスポンス、ダウンロード、キャッシュ化されたページのサイズを減らす
-+ [ブラウザレンダリングの最適化](/t32k/speed/blob/master/docs/best-practices/rendering.md) - ブラウザのページレイアウト改善
-+ [モバイルのための最適化](/t32k/speed/blob/master/docs/best-practices/mobile.md) - モバイル端末・ネットワーク特有のチューニング
++ [キャッシュの最適化](/docs/best-practices/caching.md) - アプリケーションのデータとロジックをネットワークから完全に分離させる
++ [ラウンドトリップ時間の縮小化](/docs/best-practices/rtt.md) - リクエスト-レスポンスの一連のサイクルの回数を減らす
++ [リクエストのオーバーヘッドの縮小化 ](/docs/best-practices/caching.md) - アップロードサイズを減らす
++ [読み込みサイズの減量](/docs/best-practices/payload.md) - レスポンス、ダウンロード、キャッシュ化されたページのサイズを減らす
++ [ブラウザレンダリングの最適化](/docs/best-practices/rendering.md) - ブラウザのページレイアウト改善
++ [モバイルのための最適化](/docs/best-practices/mobile.md) - モバイル端末・ネットワーク特有のチューニング
 
 ### フィードバックについて
 
