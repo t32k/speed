@@ -1,8 +1,7 @@
 ## gzip圧縮のしくみ
 
-
-原文：https://developers.google.com/speed/articles/gzip
-著者： Kevin Khaw & Eric Higgins, Google ウェブマスター  
+原文：https://developers.google.com/speed/articles/gzip  
+著者：Kevin Khaw & Eric Higgins, Google ウェブマスター  
 推奨とされる経験：HTTPとHTMLに関する知識
 
 <iframe width="640" height="360" src="http://www.youtube.com/embed/Mjab_aZsdxw" frameborder="0" allowfullscreen></iframe>
@@ -60,28 +59,32 @@ __ブラウザー:__
 最初のスニペットは、ヘッドラインのタグを順番に使用しています。
 
 未圧縮: 69 bytes  
-圧縮: 85 bytes  
+圧縮: 85 bytes
 
-	<h1>One</h1>
-	<h2>Two</h2>
-	<h3>Three</h3>
-	<h4>Four</h4>
-	<h5>Five</h5>
+```html
+<h1>One</h1>
+<h2>Two</h2>
+<h3>Three</h3>
+<h4>Four</h4>
+<h5>Five</h5>
+```
 
 代わりに同じdivタグに変更すれば、ファイルサイズが10バイト増えてしまいますが、圧縮すれば前述のスニペットより66バイトまで縮小できます。
 
 未圧縮: 79 bytes  
 圧縮: 66 bytes
 
-	<div>One</div>
-	<div>Two</div>
-	<div>Three</div>
-	<div>Four</div>
-	<div>Five</div>
+```html
+<div>One</div>
+<div>Two</div>
+<div>Three</div>
+<div>Four</div>
+<div>Five</div>
+```
 
 divとspanタグだけ使うようにすれば、さらに圧縮率を高めるのかもしれないと多くの開発者は考えるかもしれません。それは確かにそうかもしれませんが、意味的に正しいマークアップをすることはアクセシビリティのために重要ですし、ページの可読性のためにも重要であることを忘れてはなりません。しかしながら、このような方法で最適化できる部分は存在するかと思います、そしてそれを適切に使用するかしないかは、あなた、開発者次第です。
 
 
 ### その他のリソース
 
-+ [圧縮を有効にする - Page Speed](/speed/payload/GzipCompression.html)
++ [圧縮を有効にする - Page Speed](/docs/best-practices/payload.md)

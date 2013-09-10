@@ -1,9 +1,8 @@
+原文：https://developers.google.com/speed/docs/best-practices/payload
 
-原文：https://developers.google.com/speed/docs/best-practices/payload#GzipCompression
 
 
 ## 圧縮を有効にする
-
 
 ### 概要
 
@@ -29,11 +28,10 @@ __圧縮効率を最大限にするようにページコンテンツを記述す
 	+ HTML属性の引用符を統一する（例：常にシングル、ダブル、もしくは使わないといった選択にする）
 + [JavaScript](http://localhost:4000/speed/payload/MinifyJS.html)/[CSS](/speed/payload/MinifyCSS.html)を縮小化する。JavaScript/CSSの縮小化は、外部ファイル、HTML内に書かれたインラインコード両方で圧縮性を高める。 
 
-
 __画像やバイナリファイルに対してgzipしない__  
 Webでサポートされている画像形式、同様にビデオ、PDFのようなバイナリファイルはすでに圧縮されているので、gzip化しても何のメリットもないどころか逆にサイズを大きくしてしまう。画像の最適化に関しては[こちらを参照](/speed/payload/CompressImages.html)。
 
-### Additional resources
+### その他のリソース
 
 コンテンツの圧縮についてさらなる情報は [Use compression to make the web faster](http://code.google.com/speed/articles/use-compression.html) を参照。
 
@@ -53,6 +51,7 @@ __サイト内のすべてのページで一貫したURLで共有リソースを
 複数のページで共有されているリソースが同一のURLで参照されていることを確認する。もし、それらのリソースが異なるドメインまたはホスト名で提供されている場合、それらのリソースは異なるホスト名が再提供されるよりも1つのホスト名から提供されるのが良いだろう。この場合、DNSルックアップのオーバーヘッドよりもキャッシュのメリットのほうが上回るだろう。例えば、もしmysite.example.comとyoursite.example.comで同じJSファイルを使用していて、mysite.example.comからyoursite.example.comにリンクが貼られていた場合（ともかくDNSルックアップは必須だろう）、mysite.example.comからのみJSファイルを提供したほうが理にかなっている。この方法の場合、ユーザーがyoursite.example.comを訪問した際には、JSファイルのブラウザーキャッシュが効いている可能性が高い。
 
 
+
 ## CSS を縮小する
 
 ### 概要
@@ -66,6 +65,7 @@ CSSの縮小化は、JavaScriptの縮小化と同様のメリットがある。�
 例えば、[YUI Compressor](http://developer.yahoo.com/yui/compressor/) や [cssmin.js](http://www.phpied.com/cssmin-js/) のような、CSSを縮小化する無料のツールがいくつかある。
 
 Tip: CSSファイルに対してPage Speedを起動させると自動的にcssmin.jsが起動し、縮小化されたファイルが [configurable directory](https://developers.google.com/speed/docs/insights/using_firefox#savefiles) に保存される。
+
 
 
 ## HTML を縮小する
@@ -83,6 +83,7 @@ HTMLの縮小化は、JS/CSSの縮小化と同様のメリットがあります�
 *Tip:* HTMLファイルに対してPage Speedを起動させると自動的にHTML compactor（インラインのJavaScriptとCSSにはJSMinとcssmin.jsがそれぞれ適用）が起動し、縮小化されたファイルが [configurable directory](https://developers.google.com/speed/docs/insights/using_firefox#savefiles) に保存されます。
 
 
+
 ## JavaScript を縮小する
 
 ### 概要
@@ -98,8 +99,8 @@ JavaScriptコードを圧縮させることはコードのバイト数を削減�
 Tip: JSファイルに対してPage Speedを起動させると自動的にClosure Complier(もし利用できるのであれば)か、JSMin（インラインJSに対して、Compilerが利用できない時）が起動し、縮小化されたファイルが [configurable directory](https://developers.google.com/speed/docs/insights/using_firefox#savefiles) に保存される。
 
 
-## 変更後のサイズで画像を提供する
 
+## 変更後のサイズで画像を提供する
 
 ### 概要
 
@@ -108,6 +109,7 @@ Tip: JSファイルに対してPage Speedを起動させると自動的にClosur
 ### 詳細
 
 同じ画像を異なるサイズで表示したい場合、1つの画像をHTMLやCSSを使ってスケール変更するかもしれない。例えば、 250×250の大きな画像の10×10のサムネイルがあった場合、ユーザーに異なる2つのファイルをダウンロードさせるよりもマークアップでサムネイルのほうをリサイズして表示させたいと思うだろう。これはもっともな判断だ。なぜなら少なくとも大きい方の250×250は実際のサイズだからだ。しかしながら、もしマークアップで作成したインスタンスのすべてよりも大きなサイズの画像を提供した場合、不必要なバイトをネットワークを通じて送ってしまうことになる。画像編集ツールであなたのページで必要とする最も大きなサイズを画像を作成する。そして、マークアップの際に[画像のサイズも指定](http://localhost:4000/speed/rendering/SpecifyImageDimensions.html)していることを確認する。
+
 
 
 ## 画像を最適化する

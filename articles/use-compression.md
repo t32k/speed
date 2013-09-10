@@ -1,7 +1,7 @@
 ## Web高速化のために圧縮しよう
 
-原文： <https://developers.google.com/speed/articles/use-compression>  
-著者： Arvind Jain(エンジニアディレクター)とJason Glasgow(ソフトウェアエンジニアスタッフ)
+原文：https://developers.google.com/speed/articles/use-compression  
+著者：Arvind Jain(エンジニアディレクター)とJason Glasgow(ソフトウェアエンジニアスタッフ)
 
 ### はじめに
 

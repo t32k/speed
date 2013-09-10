@@ -1,4 +1,7 @@
 原文：https://developers.google.com/speed/docs/best-practices/rtt#AvoidCssImport
+
+
+
 ## CSS @import を使用しない
 
 ### 概要
@@ -24,6 +27,7 @@ __@importの代わりに`<link>`タグを使用する __
 <link rel="stylesheet" href="first.css">
 <link rel="stylesheet" href="second.css">
 ```
+
 
 
 ## リダイレクトの回数を減らす
@@ -84,16 +88,13 @@ __JavaScriptまたはmetaリダイレクトではなく、HTTPリダイレクト
 加えて、HTTP/1.1の仕様書によれば、301と302レスポンスはブラウザーによってキャッシュが可能だ。これはリソース自体がキャッシュ不可能であっても、ブラウザーは少なくとも、ローカルキャッシュ内の正しいURLを探せることを意味している。301レスポンスは特別な指定がないかぎりデフォルトでキャッシュ可能である。302レスポンスをキャッシュ可能にするためには、あなたはWebサーバーに対して、`Expires`または`Cache-Control max-age`ヘッダーを設定(詳細は[ブラウザキャッシュを活用する](/speed/caching/LeverageBrowserCaching.html)を参照)
 する。ここでの注意点は、多くのブラウザは、実際に仕様どおりではないので、301、302レスポンス両方ともキャッシュしないかもしれない。準拠および非準拠ブラウザのリストについては[Browserscope](http://www.browserscope.org/)を参照。
 
-### Examples
+### 事例
 
 [Google Analytics](http://www.google.com/analytics)アカウントオーナーによって所有されているWebページで、インバウンド内部、およびアウトバウンドトラフィックを追跡するために、画像ビーコン方式を採用しています。アカウントオーナーは`trackPageview（）`関数を定義し、Webページ内に外部JavaScriptファイルへの参照を埋め込む。HTMLドキュメントのbody下部にはユーザーが訪問した時にコールする、JavaScriptスニペットが含まれている。`trackPageview() `関数は__utm.gifという複数のパラメータつきのURLの1x1ピクセル画像を生成する。このパラメーターはページURL、リファラー、ブラウザ環境、ユーザー地域などのような情報を明示する。Analyticsサーバーがリクエストを受信したときに、情報を記録され、アカウントオーナーがレポーティングサイトにサインインしたときに提供される。
 
 ### Additional resources
 + トラッキングコードの詳細に関しては [Google Analytics Developer Docs](http://code.google.com/apis/analytics/docs/index.html) を参照
 + Apache [URL Rewriting Guide](http://apache.org/docs/2.2/rewrite/) では、`mod_rewrite`を用いた内部リライトについて議論されている
-
-
-
 
 
 
@@ -131,10 +132,7 @@ __Google アナリティクスを非同期で読み込む__
 
 
 
-
-
 ## 誤りのあるリクエストを送信しない
-
 
 ### 概要
 
@@ -185,6 +183,7 @@ __似たようなカラーパレットの画像をスプライトする __
 256色以上のスプライト画像はパレットタイプカラーの代わりにPNG trueカラータイプになる。これはスプライト画像のサイズ増加を意味し、最適なスプライトは同じ256色カラーパレット内の画像をまとめることだ。もし、カラーにばらつきがあるのなら、256色に減色してからスプライトすることを考慮する。
 
 
+
 ## スタイルシートとスクリプトの順序を最適化する
 
 ### 概要
@@ -195,7 +194,7 @@ __似たようなカラーパレットの画像をスプライトする __
 
 JavaScriptコードはページのコンテンツ、レイアウトを変更できるため、ブラウザーはスクリプトがダウンロード・パース・実行が完了するまで、スクリプトタグ以降のコンテンツのレンダリングは遅延する。しかしながら、ラウンドトリップタイムに関してより重要なことは、多くのブラウザーはスクリプトの後に記述されたリソースのダウンロードをブロックする。反対に、もしJSファイルを参照した時に他のファイルがすでにダウンロード完了になっているのならば、他のリソースは並列ダウンロードされ、JSファイルもダウンロードされる。例えば、3つのスタイルシートと2つのスクリプトが以下のような順序で記述されているとする。
 
-{% highlight html %}
+```html
 <head>
 	<link rel="stylesheet" type="text/css" href="stylesheet1.css" />
 	<script type="text/javascript" src="scriptfile1.js" />
@@ -203,7 +202,7 @@ JavaScriptコードはページのコンテンツ、レイアウトを変更で�
 	<link rel="stylesheet" type="text/css" href="stylesheet2.css" />
 	<link rel="stylesheet" type="text/css" href="stylesheet3.css" />
 </head>
-{% endhighlight %}
+```
 
 それぞれのリソースはダウンロードにきっちり100msかかり、ブラウザーは1つのホストに対して６つの同時接続が可能（詳細な情報に関しては、[Parallelize downloads across hostnames](https://developers.google.com/speed/docs/best-practices/rtt#ParallelizeDownloads) を参照）とし、キャッシュは空だと想定した場合、ダウンロードは以下のようになるだろう。
 
@@ -256,13 +255,3 @@ __できる限り、外部スクリプトは外部スタイルシートの後に
 
 __できる限り、インラインスクリプトは他のリソースの後に置く __  
 すべてのリソースの後にインラインスクリプトを置くことは、他のダウンロードのブロッキングを防ぎ、プログレッシブレンダリングを可能とする。しかしながら、”他のリソース”が外部JSファイルで、インラインスクリプトに依存している場合は無理だろう。この場合、この場合CSSファイルのマにインラインスクリプトを移せば最適だ。
-
-
-
-
-
-
-
-
-
-
