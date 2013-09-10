@@ -13,7 +13,7 @@
 + Articles
 	+ [gzip圧縮の仕組み](/articles/gzip.md)
 	+ [Web高速化のために圧縮しよう](/articles/use-compression.md)
-+ PageSpeed Rules
++ [PageSpeed Rules](/docs/best-practices/rules_intro.md)
 	+ [キャッシュの最適化](/docs/best-practices/caching.md)
 	+ ラウンドトリップ時間の縮小化
 	+ [リクエストのオーバーヘッドの縮小化 ](/docs/best-practices/caching.md)
