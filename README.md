@@ -15,7 +15,7 @@
 	+ [Web高速化のために圧縮しよう](/articles/use-compression.md)
 + [PageSpeed ルール](/docs/best-practices/rules_intro.md)
 	+ [キャッシュの最適化](/docs/best-practices/caching.md)
-	+ Minimizing round-trip times
+	+ Minimize request overhead
 	+ [リクエストのオーバーヘッドの縮小化 ](/docs/best-practices/caching.md)
 	+ [読み込みサイズの減量](/docs/best-practices/payload.md)
 	+ [ブラウザレンダリングの最適化](/docs/best-practices/rendering.md)
