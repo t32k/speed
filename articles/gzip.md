@@ -1,10 +1,3 @@
----
-layout: default
-category: articles
-date: 2012-10-16
-title: gzip圧縮のしくみ
----
-
 ## gzip圧縮のしくみ
 
 原文：<https://developers.google.com/speed/articles/gzip>
