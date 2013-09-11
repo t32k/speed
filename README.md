@@ -1,10 +1,8 @@
-![](https://raw.github.com/t32k/speed/master/images/hero.jpg)
-
 # "MWF" Translation Project
 
-+ [Make the Web Faster — Google Developers](https://developers.google.com/speed/)
+![](https://raw.github.com/t32k/speed/master/images/hero.jpg)
 
-翻訳：[@t32k](https://twitter.com/t32k)
++ [Make the Web Faster — Google Developers](https://developers.google.com/speed/)
 
 ## Best Practices
 
