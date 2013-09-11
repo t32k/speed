@@ -10,7 +10,7 @@
 
 #### gzip圧縮無しの場合：
 
-![](https://raw.github.com/t32k/speed/master/images/gzip_on.png)
+![](https://raw.github.com/t32k/speed/master/images/gzip_off.png)
 
 __ブラウザー:__
 
@@ -29,7 +29,7 @@ __ブラウザー:__
 
 #### gzip圧縮有りの場合：
 
-![](https://raw.github.com/t32k/speed/master/images/gzip_off.png)
+![](https://raw.github.com/t32k/speed/master/images/gzip_on.png)
 
 __ブラウザー:__
 
