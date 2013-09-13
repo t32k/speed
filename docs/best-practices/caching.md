@@ -1,6 +1,9 @@
-原文：https://developers.google.com/speed/docs/best-practices/caching
+# Optimize caching
 
+Most web pages include resources that change infrequently, such as CSS files, image files, JavaScript files, and so on. These resources take time to download over the network, which increases the time it takes to load a web page. HTTP caching allows these resources to be saved, or cached, by a browser or proxy. Once a resource is cached, a browser or proxy can refer to the locally cached copy instead of having to download it again on subsequent visits to the web page. Thus caching is a double win: you reduce round-trip time by eliminating numerous HTTP requests for the required resources, and you substantially reduce the total payload size of the responses. Besides leading to a dramatic reduction in page load time for subsequent user visits, enabling caching can also significantly reduce the bandwidth and hosting costs for your site.
 
++ [ブラウザキャッシュを活用する](#ブラウザキャッシュを活用する)
++ [プロキシーキャッシュを活用する](#プロキシーキャッシュを活用する)
 
 ## ブラウザキャッシュを活用する
 
@@ -15,7 +18,6 @@ HTTP/Sはブラウザによる静的リソースのキャッシュをサポー�
 すべてのブラウザーでキャッシュのメリットを最大限に享受するために、私たちは以下のことを薦める。Webサーバーに対して明示的なキャッシュヘッダーを設定し、静的なリソースをすべてキャシュ可能にする。これは画像だけのような 一部だけではない。キャッシュ可能なリソースはJS、CSSファイル、画像、他のバイナリオブジェクトファイル（メディアファイル、PDF、Flashファイル）、一般的にHTMLは静的ではないので、キャッシュを考慮すべきではない。
 
  HTTP/1.1は以下のキャッシュレスポンスヘッダーを提供している。
-
 
 - `Expires`と`Cache-Control`: max-age.これらはリソースの”生存期間”を明示する。つまりその期間中はもし新しいバージョンがサーバーからダウンロードできても、そのチェックなしにブラウザはキャッシュを利用することが可能となる。それらは”強いキャッシュヘッダー”であり、無条件で適用される。つまりヘッダーがセットされリソースがダウンロードされているのであれば、ブラウザーは終了期間が来るまで、もしくはmax-ageが達するまでGETリクエストをしない。
 
@@ -52,11 +54,10 @@ Firefoxのいくつかのバージョンによっては、たとえ他のキャ�
 
 フィンガープリントの仕組みのおかげで、`Expires`ヘッダは1年後に設定でき、`Last-Modified`はファイルが更新されて日付で設定でき、Cache-Control: max-ageヘッダーは3153600に設定可能だ。有効期限前にファイルが変更されたケースでもクライアントが再ダウンロードできるように、フィンガープリント、つまりURLを変更することでファイルは必ず再読込される。
 
-### Additional resources
+### その他のリソース
 
 - HTTPキャッシュの詳細な説明に関しては、[HTTP/1.1 RFC](http://www.w3.org/Protocols/rfc2616/rfc2616.html), sections [13.2](http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.2), [14.21](http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec14.21), and [14.9.3](http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec14.9.3)
 - Apacheにおけるキャッシュ有効化に関しては [Apache Cache Guide](http://httpd.apache.org/docs/2.2/caching.html)
-
 
 
 ## プロキシーキャッシュを活用する
@@ -84,3 +85,7 @@ __JavaScript/CSSファイルのプロキシーキャッシュについての問�
 
 + `Cache-Control`ヘッダーを`private`に設定する。こうすることでリソースのプロキシーキャッシュを無効にできる。あなたのアプリケーションが世界中で提供され、ユーザーローカリティのためにプロキシーキャッシュの依存を抑えたいのなら、この設定が適切かもしれない。
 + レスポンスヘッダーに`Vary: Accept-Encoding`を指定する。この指示はプロキシーに対してリソースを2つのバージョンで保存することを意味しており、1つは圧縮されたリソースで、もう1つは未圧縮なものだ。リソースの正しいバージョンはクライアントのリクエストヘッダーにもとづいて配信される。これはシングルホームなネットワーク、またはユーザー局所的なパブリックプロキシーに依存しているアプリケーションにとって良い選択と言える。
+
+---
+
+原文：https://developers.google.com/speed/docs/best-practices/caching

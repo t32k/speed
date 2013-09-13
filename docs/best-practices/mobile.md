@@ -1,6 +1,9 @@
-原文：https://developers.google.com/speed/docs/best-practices/mobile
+# Optimize for mobile
 
+Due to the limited CPU capabilities of mobile devices, the high round-trip times of mobile networks, and the rapid growth of mobile usage, it is even more critical to understand and optimize for mobile performance than for the desktop. Page Speed Insights now allows you to easily analyze and optimize your site for mobile performance. Many of the mobile-targeted best practices below are also relevant when optimizing for desktop, so these suggestions may also be included in Page Speed reports for desktop browsers.
 
++ [JavaScript の解析を遅延する](#JavaScript の解析を遅延する)
++ [リンク先ページのリダイレクトでキャッシュを利用できるようにする](#リンク先ページのリダイレクトでキャッシュを利用できるようにする)
 
 ## JavaScript の解析を遅延する
 
@@ -36,3 +39,7 @@ JavaScriptの遅延解析のテクニックはいくつかあり、最もシン�
 ### 推奨
 
 プロキシーが非モバイルユーザーにモバイルサイトへのリダイレクトをするのを防止するために、リダイレクトはプライベートなキャッシュでなければならない。このリダイレクトには`Vary: User-Agent`ヘッダーと`Cache-Control: private`ヘッダーを含むようにすべきだ。私たちは1日期限のキャッシュ付き302リダイレクトを推奨する。これらのヘッダーは前述の挙動を防止するために効果を発揮する。また、HTTP/1.0プロキシーがリダイレクトをキャッシュし、非モバイルユーザーへ適用するのを防ぐために、`Expires`ヘッダーも含めても問題ない。
+
+---
+
+原文：https://developers.google.com/speed/docs/best-practices/mobile

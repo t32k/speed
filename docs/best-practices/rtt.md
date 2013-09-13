@@ -1,34 +1,20 @@
-原文：https://developers.google.com/speed/docs/best-practices/rtt#AvoidCssImport
+# Minimize round-trip times
 
+Round-trip time (RTT) is the time it takes for a client to send a request and the server to send a response over the network, not including the time required for data transfer. That is, it includes the back-and-forth time on the wire, but excludes the time to fully download the transferred bytes (and is therefore unrelated to bandwidth). For example, for a browser to initiate a first-time connection with a web server, it must incur a minimum of 3 RTTs: 1 RTT for DNS name resolution; 1 RTT for TCP connection setup; and 1 RTT for the HTTP request and first byte of the HTTP response. Many web pages require dozens of RTTs.
 
+RTTs vary from less than one millisecond on a LAN to over one second in the worst cases, e.g. a modem connection to a service hosted on a different continent from the user. For small download file sizes, such as a search results page, RTT is the major contributing factor to latency on "fast" (broadband) connections. Therefore, an important strategy for speeding up web page performance is to minimize the number of round trips that need to be made. Since the majority of those round trips consist of HTTP requests and responses, it's especially important to minimize the number of requests that the client needs to make and to parallelize them as much as possible.
 
-## CSS @import を使用しない
-
-### 概要
-
-外部CSSファイル内でCSS @importを使用するとページ読み込みに遅延を発生させる。
-
-### 詳細
-
-CSS [@import](http://www.w3.org/TR/CSS2/cascade.html#at-import)を使用するとスタイルシートのインポートが可能となる。外部スタイルシート内で@importが使用されると、ブラウザーはスタイルシートを並列ダウンロードできない。これはページ読み込みに対して余計なラウンドトリップタイムを発生させる。例えば、`first.css`内に以下のコードが含まているとする：
-
-{% highlight html %}
-@import url("second.css")
-{% endhighlight %}
-
-ブラウザーはダウンロードする必要のある`second.css`を見つける前に、`first.css`のダウンロード、パース、実行をしてしまう。
-
-### 推奨
-
-__@importの代わりに`<link>`タグを使用する __  
-各スタイルシートの@importの代わりに`<link>`タグを使用する。これでブラウザーはスタイルシートを並列にダウンロードでき、結果的にページ読み込み時間を短縮できる。 
-
-```html
-<link rel="stylesheet" href="first.css">
-<link rel="stylesheet" href="second.css">
-```
-
-
++ Minimize DNS lookups
++ リダイレクトの回数を減らす
++ Avoid bad requests
++ Combine external JavaScript
++ Combine external CSS
++ Combine images using CSS sprites
++ Optimize the order of styles and scripts
++ Avoid document.write
++ CSS @import を使用しない
++ Prefer asynchronous resources
++ Parallelize downloads across hostnames
 
 ## リダイレクトの回数を減らす
 
@@ -95,6 +81,34 @@ __JavaScriptまたはmetaリダイレクトではなく、HTTPリダイレクト
 ### Additional resources
 + トラッキングコードの詳細に関しては [Google Analytics Developer Docs](http://code.google.com/apis/analytics/docs/index.html) を参照
 + Apache [URL Rewriting Guide](http://apache.org/docs/2.2/rewrite/) では、`mod_rewrite`を用いた内部リライトについて議論されている
+
+
+
+## CSS @import を使用しない
+
+### 概要
+
+外部CSSファイル内でCSS @importを使用するとページ読み込みに遅延を発生させる。
+
+### 詳細
+
+CSS [@import](http://www.w3.org/TR/CSS2/cascade.html#at-import)を使用するとスタイルシートのインポートが可能となる。外部スタイルシート内で@importが使用されると、ブラウザーはスタイルシートを並列ダウンロードできない。これはページ読み込みに対して余計なラウンドトリップタイムを発生させる。例えば、`first.css`内に以下のコードが含まているとする：
+
+{% highlight html %}
+@import url("second.css")
+{% endhighlight %}
+
+ブラウザーはダウンロードする必要のある`second.css`を見つける前に、`first.css`のダウンロード、パース、実行をしてしまう。
+
+### 推奨
+
+__@importの代わりに`<link>`タグを使用する __  
+各スタイルシートの@importの代わりに`<link>`タグを使用する。これでブラウザーはスタイルシートを並列にダウンロードでき、結果的にページ読み込み時間を短縮できる。 
+
+```html
+<link rel="stylesheet" href="first.css">
+<link rel="stylesheet" href="second.css">
+```
 
 
 
@@ -255,3 +269,7 @@ __できる限り、外部スクリプトは外部スタイルシートの後に
 
 __できる限り、インラインスクリプトは他のリソースの後に置く __  
 すべてのリソースの後にインラインスクリプトを置くことは、他のダウンロードのブロッキングを防ぎ、プログレッシブレンダリングを可能とする。しかしながら、”他のリソース”が外部JSファイルで、インラインスクリプトに依存している場合は無理だろう。この場合、この場合CSSファイルのマにインラインスクリプトを移せば最適だ。
+
+--
+
+原文：https://developers.google.com/speed/docs/best-practices/rtt#AvoidCssImport

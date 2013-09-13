@@ -1,5 +1,12 @@
-原文：https://developers.google.com/speed/docs/best-practices/rendering
+# Optimize browser rendering
 
+Once resources have been downloaded to the client, the browser still needs to load, interpret, and render HTML, CSS, and JavaScript code. By simply formatting your code and pages in ways that exploit the characteristics of current browsers, you can enhance performance on the client side.
+
++ Use efficient CSS selectors
++ Avoid CSS expressions
++ Put CSS in the document head
++ Specify image dimensions
++ Specify a character set
 
 
 ## CSS をドキュメントヘッドに含める
@@ -68,3 +75,7 @@ HTTPヘッダーもしくはHTMLのメタタグで実際のドキュメントと
 + [Page Speed wiki](http://code.google.com/p/page-speed/wiki/SpecifyCharsetEarly)
 + [Browser Performance Issues with Charsets](http://zoompf.com/2009/12/browser-performance-issues-with-charsets)
 + [Performance Implications of "charset"](http://www.kylescholz.com/blog/2010/01/performance_implications_of_charset.html)
+
+---
+
+原文：https://developers.google.com/speed/docs/best-practices/rendering

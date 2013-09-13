@@ -1,6 +1,18 @@
-原文：https://developers.google.com/speed/docs/best-practices/payload
+# Minimize payload size
 
+The amount of data sent in each server response can add significant latency to your application, especially in areas where bandwidth is constrained. In addition to the network cost of the actual bytes transmitted, there is also a penalty incurred for crossing an IP packet boundary. (The maximum packet size, or Maximum Transmission Unit (MTU), is 1500 bytes on an Ethernet network, but varies on other types of networks.) Unfortunately, since it's difficult to know which bytes will cross a packet boundary, the best practice is to simply reduce the number of packets your server transmits, and strive to keep them under 1500 bytes wherever possible.
 
+Minimizing the payload size of both dynamic and static resources can reduce network latency significantly. In addition, for scripts that are cached, cutting down their byte size speeds up the time the browser takes to parse and execute code needed to render the page.
+
++ Enable compression
++ Remove unused CSS
++ Minify JavaScript
++ Minify CSS
++ Minify HTML
++ Defer loading of JavaScript
++ Optimize images
++ Serve scaled images
++ Serve resources from a consistent URL
 
 ## 圧縮を有効にする
 
@@ -138,3 +150,7 @@ __画像コンプレッサーを使用する__
 JPEG, PNGファイルに対してさらにロスレス圧縮ができ、しかも画像クオリティを変化させないツールがいくつか利用できる。私たちはJPEGの場合は、[jpegtran](http://jpegclub.org/) もしくは [jpegoptim](http://freecode.com/projects/jpegoptim)（Linuxのみ対応; --strip-allオプションで起動）PNGの場合、[OptiPNG](http://optipng.sourceforge.net/) または [PNGOUT](http://www.advsys.net/ken/util/pngout.htm) を推奨する。
 
 *Tip:* ページが参照しているJPEFとPNGに対してPage Speedを起動させると自動的に圧縮されたファイルが [configurable directory](https://developers.google.com/speed/docs/insights/using_firefox#savefiles) に保存される。
+
+---
+
+原文：https://developers.google.com/speed/docs/best-practices/payload
