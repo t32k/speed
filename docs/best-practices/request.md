@@ -1,5 +1,3 @@
-原文: https://developers.google.com/speed/docs/best-practices/request
-
 # リクエストオーバーヘッドを最小化する
 
 Every time a client sends an HTTP request, it has to send all associated cookies that have been set for that domain and path along with it. Most users have asymmetric Internet connections: upload-to-download bandwidth ratios are commonly in the range of 1:4 to 1:20. This means that a 500-byte HTTP header request could take the equivalent time to upload as 10 KB of HTTP response data takes to download. The factor is actually even higher because HTTP request headers are sent uncompressed. In other words, for requests for small objects (say, less than 10 KB, the typical size of a compressed image), the data sent in a request header can account for the majority of the response time.
@@ -12,9 +10,7 @@ The best way to cut down on client request time is to reduce the number of bytes
 + [静的コンテンツはクッキーレスドメインから提供する](#静的コンテンツはクッキーレスドメインから提供する)
 
 
-
 ## リクエストサイズを最小化する
-
 
 ### 概要
 
@@ -53,7 +49,6 @@ If you host your static files using a CDN, your CDN may support serving these re
 
 静的ファイルをCDNでホスティングしている場合、そのCDNは他のドメインからこれらのリソースを提供することをサポートしているだろうから直接CDNに問い合わせてみる。
 
-
 ### 推奨
 
 __プロキシーキャッシュを有効にする__  
@@ -62,10 +57,7 @@ __プロキシーキャッシュを有効にする__
 __クッキーレスドメインから読み込まれた外部JSファイルを初期段階で提供しない__  
 ドキュメントヘッドで参照されページのスタートアップに必要とされるJavaScriptは、それらはメインドキュメントと同じホスト名から提供されるべきだ。なぜなら、多くのブラウザはJavaScriptファイルが完全にダウンロード、パース、実行されるまで他のリソースのダウンロード、レンダリングを止めるため、この処理にさらにDNSルックアップを追加してしまう危険性が避けるためだ。
 
-
 ### 事例
-
-Many Google properties, including News and Code (this site), serve static resources, such as JS files and images, from a separate domain, www.gstatic.com. No cookies can be set on this domain. For the News homepage at news.google.com, you can see the cookie in the request header in this screen shot:
 
 Google NewsとGoogle Code(このサイト)も含めて多くのGoogleサイトでは、JSファイルや画像のような静的リソースをドメインを分けた`www.gstatic.com`から提供している。このドメイン上ではクッキーをセットすることが出来ません。メインのドキュメントページのために`news.google.com`のドメイン上ではスクリーンショットのヘッダーでクッキーが送信されていることを確認できるだろう。
 
@@ -73,24 +65,8 @@ Google NewsとGoogle Code(このサイト)も含めて多くのGoogleサイト�
 
 しかし、Newsのロゴ.gifを提供している`www.gstatic.com`では、ヘッダーにクッキーがないことが分かる。
 
-
 ![](../../images/cookieheader2.png)
 
+---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+原文: https://developers.google.com/speed/docs/best-practices/request
