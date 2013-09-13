@@ -8,8 +8,9 @@ The latency can be higher at the beginning of a new browser session. To minimize
 
 The best way to cut down on client request time is to reduce the number of bytes uploaded as request header data.
 
-+ Serve static content from a cookieless domain
-+ Minimize request size
++ [リクエストサイズを最小化する](#リクエストサイズを最小化する)
++ [静的コンテンツはクッキーレスドメインから提供する](#静的コンテンツはクッキーレスドメインから提供する)
+
 
 
 ## リクエストサイズを最小化する
@@ -68,12 +69,12 @@ Many Google properties, including News and Code (this site), serve static resour
 
 Google NewsとGoogle Code(このサイト)も含めて多くのGoogleサイトでは、JSファイルや画像のような静的リソースをドメインを分けた`www.gstatic.com`から提供している。このドメイン上ではクッキーをセットすることが出来ません。メインのドキュメントページのために`news.google.com`のドメイン上ではスクリーンショットのヘッダーでクッキーが送信されていることを確認できるだろう。
 
-![](../images/cookieheader1.png)
+![](../../images/cookieheader1.png)
 
 しかし、Newsのロゴ.gifを提供している`www.gstatic.com`では、ヘッダーにクッキーがないことが分かる。
 
 
-![](../images/cookieheader2.png)
+![](../../images/cookieheader2.png)
 
 
 
