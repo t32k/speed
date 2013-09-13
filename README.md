@@ -6,6 +6,13 @@ Photo credit: ["Going nowhere fast" | Flickr](http://www.flickr.com/photos/thatg
 
 + [Make the Web Faster — Google Developers](https://developers.google.com/speed/)
 
+## PageSpeed 
+
++ Analysis
+	+ Insights
+	+ Rules
++ Optimization
+
 ## Best Practices
 
 + [記事](/articles/)
@@ -18,6 +25,10 @@ Photo credit: ["Going nowhere fast" | Flickr](http://www.flickr.com/photos/thatg
 	+ [読み込みサイズの減量](/docs/best-practices/payload.md)
 	+ [ブラウザレンダリングの最適化](/docs/best-practices/rendering.md)
 	+ [モバイルのための最適化](/docs/best-practices/mobile.md)
+
+##  Community
+
++ Community
 
 ---
 
