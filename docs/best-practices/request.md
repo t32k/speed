@@ -35,35 +35,61 @@ Store only a unique identifier in the cookie, and key the ID to data stored at t
 Remove unused or duplicated cookie fields.
 The fields set by a cookie at the top-level path of a domain (i.e. /) are inherited by the resources served off all paths below that domain. Therefore, if you are serving different applications on different URL paths, and you have a field that applies globally to all applications on a domain — for example, a user's language preference — include that field in the cookie set at the top-level domain; don't duplicate the field in cookies set for subpaths. Conversely, if a field only applies to an application served from a subpath — for example, a UI setting — don't include that field in the top-level cookie and force the unused data to be passed needlessly for other applications.
 
-Back to top
 
-Serve static content from a cookieless domain
+## 静的コンテンツはクッキーレスドメインから提供する
 
 ### 概要
 
-Serving static resources from a cookieless domain reduces the total size of requests made for a page.
+静的リソースをクッキーレスドメインから提供することで、ページで生成されるリクエストの合計サイズを削減することができる。
 
 ### 詳細
 
-Static content, such as images, JS and CSS files, don't need to be accompanied by cookies, as there is no user interaction with these resources. You can decrease request latency by serving static resources from a domain that doesn't serve cookies. This technique is especially useful for pages referencing large volumes of rarely cached static content, such as frequently changing image thumbnails, or infrequently accessed image archives. We recommend this technique for any page that serves more than 5 static resources. (For pages that serve fewer resources than this, it's not worth the cost of setting up an extra domain.)  
-To reserve a cookieless domain for serving static content, register a new domain name and configure your DNS database with a CNAME record that points the new domain to your existing domain A record. Configure your web server to serve static resources from the new domain, and do not allow any cookies to be set anywhere on this domain. In your web pages, reference the domain name in the URLs for the static resources.
+画像や、JS、CSSのような静的なコンテンツは、ユーザーとのインタラクションが無いためクッキーを付帯させる必要がない。そのためクッキーを送信しないドメインから静的リソースを提供することでリクエストレイテンシーを減少させることができる。このテクニックはとりわけ、めったにアクセスしない画像アーカイブページや、頻繁にサムネイル画像に変更があるようなキャッシュしにくいコンテンツをたくさん読み込んでいるページに対して有効です。静的リソースが5つ以上あるようなページならどのページでもこのテクニックを推奨する。（これよりも少ないリソースのページに関しては、新たにドメイン設定する手間をかけるほどでもない。）
+
+静的コンテンツを提供するためにクッキーレスドメインを予約するには、新しいドメイン名を登録し、既存のドメインのAレコードに対して新しいドメインのCNAMEレコードをDNSデータベースで設定する。新ドメインから静的リソースを提供するためにWebサーバーをセットアップし、このドメインではいかなる場所でもクッキーを送信しないようにする。Webページにおいては静的リソースの参照はドメイン名付きのURLで参照する。
 
 If you host your static files using a CDN, your CDN may support serving these resources from another domain. Contact your CDN to find out.
+
+静的ファイルをCDNでホスティングしている場合、そのCDNは他のドメインからこれらのリソースを提供することをサポートしているだろうから直接CDNに問い合わせてみる。
 
 
 ### 推奨
 
-Enable proxy caching.
-For resources that rarely change, set caching headers for browsers and proxies. Because cookies will not be sent for these resources, there is no risk that proxy caches will cache user-specific content.
-Don't serve early loaded external JS files from the cookieless domain.
-For JavaScript referenced in the head of the document and needed for page startup, it should be served from the same hostname as the main document. Because most browsers block other downloads and rendering until all JavaScript files have been downloaded, parsed and executed, it's better to avoid the risk of an additional DNS lookup at this point of processing.
-Example
+__プロキシーキャッシュを有効にする__  
+めったに変更しないリソースのために、ブラウザ、プロキシーサーバー向けにキャッシュヘッダーを設定する。これらのリソースにはクッキーが送信されないため、プロキシーキャッシュがユーザー特定のコンテンツをキャッシュするという危険性がないからだ。
+
+__クッキーレスドメインから読み込まれた外部JSファイルを初期段階で提供しない__  
+ドキュメントヘッドで参照されページのスタートアップに必要とされるJavaScriptは、それらはメインドキュメントと同じホスト名から提供されるべきだ。なぜなら、多くのブラウザはJavaScriptファイルが完全にダウンロード、パース、実行されるまで他のリソースのダウンロード、レンダリングを止めるため、この処理にさらにDNSルックアップを追加してしまう危険性が避けるためだ。
+
+
+### 事例
 
 Many Google properties, including News and Code (this site), serve static resources, such as JS files and images, from a separate domain, www.gstatic.com. No cookies can be set on this domain. For the News homepage at news.google.com, you can see the cookie in the request header in this screen shot:
 
+Google NewsとGoogle Code(このサイト)も含めて多くのGoogleサイトでは、JSファイルや画像のような静的リソースをドメインを分けた`www.gstatic.com`から提供している。このドメイン上ではクッキーをセットすることが出来ません。メインのドキュメントページのために`news.google.com`のドメイン上ではスクリーンショットのヘッダーでクッキーが送信されていることを確認できるだろう。
+
+![](../images/cookieheader1.png)
+
+しかし、Newsのロゴ.gifを提供している`www.gstatic.com`では、ヘッダーにクッキーがないことが分かる。
 
 
-But for www.gstatic.com, which is used to serve the News logo .gif file, no cookie headers appear in the request or response:
+![](../images/cookieheader2.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

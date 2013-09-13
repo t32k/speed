@@ -2,6 +2,8 @@
 
 ![](https://raw.github.com/t32k/speed/master/images/hero.jpg)
 
+Photo credit: ["Going nowhere fast" | Flickr](http://www.flickr.com/photos/thatguyfromcchs08/2300190277/)
+
 + [Make the Web Faster — Google Developers](https://developers.google.com/speed/)
 
 ## Best Practices
@@ -18,7 +20,5 @@
 	+ [モバイルのための最適化](/docs/best-practices/mobile.md)
 
 ---
-
-Photo credit: ["Going nowhere fast" | Flickr](http://www.flickr.com/photos/thatguyfromcchs08/2300190277/)
 
 Except as otherwise noted, the content of this page is licensed under the Creative Commons Attribution 3.0 License, and code samples are licensed under the Apache 2.0 License. For details, see our Site Policies.
