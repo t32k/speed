@@ -8,7 +8,7 @@ Photo credit: ["Going nowhere fast" | Flickr](http://www.flickr.com/photos/thatg
 
 ## Best Practices
 
-+ Articles
++ [記事](/articles/)
 	+ [gzip圧縮の仕組み](/articles/gzip.md)
 	+ [Web高速化のために圧縮しよう](/articles/use-compression.md)
 + [PageSpeed ルール](/docs/best-practices/rules_intro.md)
