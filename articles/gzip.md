@@ -4,7 +4,7 @@
 著者：Kevin Khaw & Eric Higgins, Google ウェブマスター  
 推奨とされる経験：HTTPとHTMLに関する知識
 
-[![How gzip works](https://raw.github.com/t32k/speed/master/images/gzip_off.png)](https://www.youtube.com/watch?v=Mjab_aZsdxw)
+[![How gzip works][https://raw.github.com/t32k/speed/master/images/gzip_off.png]](https://www.youtube.com/watch?v=Mjab_aZsdxw)
 
 ### gzip圧縮の有無によるブラウザーリクエストの流れ
 
