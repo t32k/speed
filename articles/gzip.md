@@ -4,7 +4,7 @@
 著者：Kevin Khaw & Eric Higgins, Google ウェブマスター  
 推奨とされる経験：HTTPとHTMLに関する知識
 
-<iframe width="640" height="360" src="http://www.youtube.com/embed/Mjab_aZsdxw" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/Mjab_aZsdxw?rel=0" frameborder="0" allowfullscreen></iframe>
 
 ### gzip圧縮の有無によるブラウザーリクエストの流れ
 
