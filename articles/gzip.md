@@ -4,7 +4,7 @@
 著者：Kevin Khaw & Eric Higgins, Google ウェブマスター  
 推奨とされる経験：HTTPとHTMLに関する知識
 
-<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/Mjab_aZsdxw?rel=0" frameborder="0" allowfullscreen></iframe>
+<object width="560" height="315"><param name="movie" value="//www.youtube-nocookie.com/v/Mjab_aZsdxw?hl=ja_JP&amp;version=3&amp;rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube-nocookie.com/v/Mjab_aZsdxw?hl=ja_JP&amp;version=3&amp;rel=0" type="application/x-shockwave-flash" width="560" height="315" allowscriptaccess="always" allowfullscreen="true"></embed></object>
 
 ### gzip圧縮の有無によるブラウザーリクエストの流れ
 
