@@ -4,13 +4,11 @@
 著者：Kevin Khaw & Eric Higgins, Google ウェブマスター  
 推奨とされる経験：HTTPとHTMLに関する知識
 
-<object width="560" height="315"><param name="movie" value="//www.youtube-nocookie.com/v/Mjab_aZsdxw?hl=ja_JP&amp;version=3&amp;rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube-nocookie.com/v/Mjab_aZsdxw?hl=ja_JP&amp;version=3&amp;rel=0" type="application/x-shockwave-flash" width="560" height="315" allowscriptaccess="always" allowfullscreen="true"></embed></object>
+[![How gzip works](https://raw.github.com/t32k/speed/master/images/gzip_off.png)](https://www.youtube.com/watch?v=Mjab_aZsdxw)
 
 ### gzip圧縮の有無によるブラウザーリクエストの流れ
 
 #### gzip圧縮無しの場合：
-
-![](https://raw.github.com/t32k/speed/master/images/gzip_off.png)
 
 __ブラウザー:__
 
