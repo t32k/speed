@@ -89,4 +89,4 @@ divとspanタグだけ使うようにすれば、さらに圧縮率を高める�
 
 ### その他のリソース
 
-+ [圧縮を有効にする - Page Speed](/docs/best-practices/payload.md)
++ [圧縮を有効にする - Page Speed](/docs/best-practices/payload.md#圧縮を有効にする)
