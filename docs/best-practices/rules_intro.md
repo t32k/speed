@@ -19,7 +19,7 @@ Page Speedはクライアント側からの観点でパフォーマンスを評�
 
 ## その他のリソース
 
-+ このサイトに書かれているベストプラクティスについてのさらなる詳細に関してはSteve Soudersの [『ハイパフォーマンスWebサイト』](https://www.oreilly.co.jp/books/9784873113616/)　と [『続・ハイパフォーマンスWebサイト』](http://www.oreilly.co.jp/books/9784873114460/) を参照。
++ このサイトに書かれているベストプラクティスについてのさらなる詳細に関してはSteve Soudersの[『ハイパフォーマンスWebサイト』](https://www.oreilly.co.jp/books/9784873113616/)と[『続・ハイパフォーマンスWebサイト』](http://www.oreilly.co.jp/books/9784873114460/)を参照。
 + このサイトのサンプルコードを確認したい場合は、同様に[14 Rules for Faster-Loading Web Sites](http://stevesouders.com/hpws/rules.php)を参照。
 + このサイトの実行可能なテストとブラウザの挙動の比較の指標に関しては [Browserscope](http://www.browserscope.org/) を参照。
 
