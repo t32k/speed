@@ -1,15 +1,55 @@
-# Optimize browser rendering
+# ブラウザレンダリングの最適化
 
 Once resources have been downloaded to the client, the browser still needs to load, interpret, and render HTML, CSS, and JavaScript code. By simply formatting your code and pages in ways that exploit the characteristics of current browsers, you can enhance performance on the client side.
 
 + Use efficient CSS selectors
 + Avoid CSS expressions
-+ Put CSS in the document head
-+ Specify image dimensions
-+ Specify a character set
++ [CSSをドキュメントヘッドに含める](#CSSをドキュメントヘッドに含める)
++ [画像のサイズを指定する](#画像のサイズを指定する)
++ [文字セットを指定する](#文字セットを指定する)
 
 
-## CSS をドキュメントヘッドに含める
+## Use efficient CSS selectors
+
+### 概要
+
+Avoiding inefficient key selectors that match large numbers of elements can speed up page rendering.
+
+### 詳細
+
+As the browser parses HTML, it constructs an internal document tree representing all the elements to be displayed. It then matches elements to styles specified in various stylesheets, according to the standard CSS cascade, inheritance, and ordering rules. In Mozilla's implementation (and probably others as well), for each element, the CSS engine searches through style rules to find a match. The engine evaluates each rule from right to left, starting from the rightmost selector (called the "key") and moving through each selector until it finds a match or discards the rule. (The "selector" is the document element to which the rule should apply.)
+
+According to this system, the fewer rules the engine has to evaluate the better. So, of course, removing unused CSS is an important step in improving rendering performance. After that, for pages that contain large numbers of elements and/or large numbers of CSS rules, optimizing the definitions of the rules themselves can enhance performance as well. The key to optimizing rules lies in defining rules that are as specific as possible and that avoid unnecessary redundancy, to allow the style engine to quickly find matches without spending time evaluating rules that don't apply.
+
+The following categories of rules are considered to be inefficient:
+
+__Rules with descendant selectors__  
+For example:  
+__Rules with the universal selector as the key__
+
+```css
+body * {...}
+.hide-scrollbars * {...}
+```
+
+__Rules with a tag selector as the key__
+
+```css
+ul > li > a {...}
+#footer > h3 {...}
+```
+
+Child and adjacent selectors are inefficient because, for each matching element, the browser has to evaluate another node. It becomes doubly expensive for each child selector in the rule. Again, the less specific the key, the greater the number of nodes that need to be evaluated. However, while inefficient, they are still preferable to descendant selectors in terms of performance.
+
+
+### 追加のリソース
+
++ For more details on efficient CSS rules with Mozilla, see Writing Efficient CSS for Use in the Mozilla UI.
++ For complete information on CSS, see the Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification. For information on CSS selectors specifically, see Chapter 5.
+
+
+
+## CSSをドキュメントヘッドに含める
 
 ### 概要
 
