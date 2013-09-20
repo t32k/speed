@@ -19,12 +19,12 @@ Photo credit: ["Going nowhere fast" | Flickr](http://www.flickr.com/photos/thatg
 	+ [gzip圧縮の仕組み](/articles/gzip.md)
 	+ [Web高速化のために圧縮しよう](/articles/use-compression.md)
 + [PageSpeed ルール](/docs/best-practices/rules_intro.md)
-	+ [キャッシュの最適化](/docs/best-practices/caching.md)
+	+ ★[キャッシュの最適化](/docs/best-practices/caching.md)
 	+ [ラウンドトリップ回数を最小にする](/docs/best-practices/rtt.md)
 	+ [リクエストのオーバーヘッドの縮小化 ](/docs/best-practices/request.md)
 	+ [読み込みサイズの減量](/docs/best-practices/payload.md)
 	+ [ブラウザレンダリングの最適化](/docs/best-practices/rendering.md)
-	+ [モバイルのための最適化](/docs/best-practices/mobile.md)
+	+ ★[モバイルのための最適化](/docs/best-practices/mobile.md)
 
 ##  Community
 
