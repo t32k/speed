@@ -1,12 +1,13 @@
 # モバイルのための最適化
 
-Due to the limited CPU capabilities of mobile devices, the high round-trip times of mobile networks, and the rapid growth of mobile usage, it is even more critical to understand and optimize for mobile performance than for the desktop. Page Speed Insights now allows you to easily analyze and optimize your site for mobile performance. Many of the mobile-targeted best practices below are also relevant when optimizing for desktop, so these suggestions may also be included in Page Speed reports for desktop browsers.
-
-+ [JavaScript の解析を遅延する](#JavaScript の解析を遅延する)
-+ [ランディングページリダイレクトをキャッシュ可能にする](#ランディングページリダイレクトをキャッシュ可能にする)
+モバイル端末の限られたCPU性能や、ハイレイテンシーなネットワーク、市場の急激な成長により、モバイルパフォーマンスの最適化と理解はデスクトップよりも重要になってきている。[PageSpeed Insights](http://developers.google.com/speed/pagespeed/insights/)を使用すれば、モバイルサイトのパフォーマンスを簡単に分析し最適化することができる。下記のようなモバイル向けのベストプラクティスの多くは、デスクトップサイト最適化にも効果を発揮する。そのため、これらの提案はデスクトップブラウザ用のPageSpeedレポートにも含まれる。
 
 
-## JavaScript の解析を遅延する
++ [JavaScriptの解析を遅延する](#JavaScript の解析を遅延する)
++ [ランディングページのリダイレクトをキャッシュ可能にする](#ランディングページのリダイレクトをキャッシュ可能にする)
+
+
+## JavaScriptの解析を遅延する
 
 ### 概要
 
@@ -27,7 +28,7 @@ JavaScriptの遅延解析のテクニックはいくつかあり、最もシン�
 
 
 
-## ランディングページリダイレクトをキャッシュ可能にする
+## ランディングページのリダイレクトをキャッシュ可能にする
 
 ### 概要
 
