@@ -35,6 +35,25 @@ body * {...}
 __Rules with a tag selector as the key__
 
 ```css
+ul li a {...}
+#footer h3 {...}
+* html #atticPromo ul li a {...]
+```
+
+Descendant selectors are inefficient because, for each element that matches the key, the browser must also traverse up the DOM tree, evaluating every ancestor element until it finds a match or reaches the root element. The less specific the key, the greater the number of nodes that need to be evaluated.
+
+__Rules with child or adjacent selectors__  
+For example:  
+__Rules with the universal selector as the key__
+
+```css
+body > * {...}
+.hide-scrollbars > * {...}
+```
+
+__Rules with a tag selector as the key__
+
+```css
 ul > li > a {...}
 #footer > h3 {...}
 ```
@@ -42,12 +61,174 @@ ul > li > a {...}
 Child and adjacent selectors are inefficient because, for each matching element, the browser has to evaluate another node. It becomes doubly expensive for each child selector in the rule. Again, the less specific the key, the greater the number of nodes that need to be evaluated. However, while inefficient, they are still preferable to descendant selectors in terms of performance.
 
 
+__Rules with overly qualified selectors__  
+For example:
+
+```css
+ul#top_blue_nav {...}
+form#UserLogin {...}
+```
+
+ID selectors are unique by definition. Including tag or class qualifiers just adds redundant information that needs to be evaluated needlessly.
+
+__Rules that apply the :hover pseudo-selector to non-link elements__  
+For example:
+
+```css
+h3:hover {...}
+.foo:hover {...}
+#foo:hover {...}
+div.faa :hover {...}
+```
+
+The :hover pseudo-selector on non-anchor elements is known to make IE7 and IE8 slow in some cases*.  When a strict doctype is not used, IE7 and IE8 will ignore :hover on any element other than anchors. When a strict doctype is used, :hover on non-anchors may cause performance degradation. 
+
+* See a bug report at http://connect.microsoft.com/IE/feedback/ViewFeedback.aspx?FeedbackID=391387.
+
+### 推奨
+
+__Avoid a universal key selector.__  
+Allow elements to inherit from ancestors, or use a class to apply a style to multiple elements.
+
+__Make your rules as specific as possible.__  
+Prefer class and ID selectors over tag selectors.
+
+__Remove redundant qualifiers.__
+These qualifiers are redundant:
+
++ ID selectors qualified by class and/or tag selectors
++ Class selectors qualified by tag selectors (when a class is only used for one tag, which is a good design practice anyway).
+
+__Avoid using descendant selectors, especially those that specify redundant ancestors.__  
+For example, the rule body ul li a {...} specifies a redundant body selector, since all elements are descendants of the body tag.
+
+__Use class selectors instead of descendant selectors.__  
+For example, if you need two different styles for an ordered list item and an ordered list item, instead of using two rules:
+
+```css
+ul li {color: blue;}
+ol li {color: red;}
+```
+
+You could encode the styles into two class names and use those in your rules; e.g:
+
+```css
+.unordered-list-item {color: blue;}
+.ordered-list-item {color: red;}
+```
+
+If you must use descendant selectors, prefer child selectors, which at least only require evaluation of one additional node, not all the intermediate nodes up to an ancestor.
+
+__Avoid the :hover pseudo-selector for non-link elements for IE clients.__  
+If you use :hover on non-anchor elements, test the page in IE7 and IE8 to be sure your page is usable.   If you find that :hover is causing performance issues, consider conditionally using a JavaScript onmouseover event handler for IE clients.
+
 ### 追加のリソース
 
 + For more details on efficient CSS rules with Mozilla, see Writing Efficient CSS for Use in the Mozilla UI.
 + For complete information on CSS, see the Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification. For information on CSS selectors specifically, see Chapter 5.
 
 
+## Avoid CSS expressions
+
+### Overview
+
+CSS expressions degrade rendering performance; replacing them with alternatives will improve browser rendering for IE users.
+
+__Note:__ This best practices in this section apply only to Internet Explorer 5 through 7, which support CSS expressions. CSS expressions are deprecated in Internet Explorer 8, and not supported by other browsers.
+
+
+### Details
+
+Internet Explorer 5 introduced CSS expressions, or "dynamic properties", as a means of dynamically changing document properties in response to various events. They consist of JavaScript expressions embedded as the values of CSS properties in CSS declarations. For the most part, they are used for the following purposes:
+
++ To emulate standard CSS properties supported by other browsers but not yet implemented by IE.
++ To provide dynamic styling and advanced event handling in a more compact and convenient way than writing full-blown JavaScript-injected styles.
+
+Unfortunately, the performance penalty imposed by CSS expressions is considerable, as the browser reevaluates each expression whenever any event is triggered, such as a window resize, a mouse movement and so on. The poor performance of CSS expressions is one of the reasons they are now deprecated in IE 8. If you have used CSS expressions in your pages, you should make every effort to remove them and use other methods to achieve the same functionality.
+
+### Recommendations
+
+__Use standard CSS properties if possible.__   
+IE 8 is fully CSS-standards-compliant; it supports CSS expressions only if run in "compatibility" mode, but it does not support them in "standards" mode. If you do not need to maintain backwards compatibility with older versions of IE, you should convert any instances of expressions used in place of standard CSS properties to their CSS standard counterparts. For a complete list of CSS properties and IE versions that support them, see the MSDN CSS Attributes Index. If you do need to support older versions of IE in which the desired CSS properties are not available, use JavaScript to achieve the equivalent functionality.
+
+__Use JavaScript to script styles.__  
+If you are using CSS expressions for dynamic styling, it makes sense to rewrite them as pure JavaScript to both improve performance in IE and get the benefit of supporting the same functionality in other browsers at the same time. In this example given on the MSDN page on Dynamic Properties, a CSS expression is used to center an HTML block whose dimensions can change at runtime, and to re-center that block every time the window is resized:
+
+
+```html
+<div id="oDiv" style="background-color: #CFCFCF; position: absolute;
+left:expression(document.body.clientWidth/2-oDiv.offsetWidth/2); 
+ top:expression(document.body.clientHeight/2-oDiv.offsetHeight/2)">Example DIV</div>
+```
+
+Here's an equivalent example using JavaScript and standard CSS:
+
+```html
+<style>
+  #oDiv { position: absolute; background-color: #CFCFCF;}
+</style>
+
+<script type="text/javascript">
+ // Check for browser support of event handling capability
+  if (window.addEventListener) {
+  window.addEventListener("load", centerDiv, false);
+ window.addEventListener("resize", centerDiv, false);
+  } else if (window.attachEvent) {
+  window.attachEvent("onload", centerDiv);
+  window.attachEvent("onresize", centerDiv);
+  } else {
+  window.onload = centerDiv;
+  window.resize = centerDiv;
+  }
+	 
+  function centerDiv() {
+  var myDiv = document.getElementById("oDiv");
+  var myBody = document.body;
+  var bodyWidth = myBody.offsetWidth;
+ 
+  //Needed for Firefox, which doesn't support offsetHeight
+  var bodyHeight;
+ if (myBody.scrollHeight) 
+ bodyHeight = myBody.scrollHeight;
+ else bodyHeight = myBody.offsetHeight;
+ 
+  var divWidth = myDiv.offsetWidth;
+ 
+  if (myDiv.scrollHeight)
+   var divHeight = myDiv.scrollHeight;
+   else var divHeight = myDiv.offsetHeight;
+ 
+ myDiv.style.top = (bodyHeight - divHeight) / 2;
+  myDiv.style.left = (bodyWidth - divWidth) / 2; 
+  }
+
+</script>
+```
+
+If you are using CSS expressions to emulate CSS properties that aren't available in earlier versions of IE, you should provide JavaScript code for those cases with a version test to disable it for browsers that do support CSS. For example, the max-width property, which forces text to wrap around at a certain number of pixels, was not supported until IE 7. As a workaround, this CSS expression provides that functionality for IE 5 and 6:
+
+```html
+p { width: expression( document.body.clientWidth > 600 ? "600px" : "auto" ); }
+```
+To replace the CSS expression with equivalent JavaScript for the IE versions that don't support this property, you could use something like the following:
+
+```html
+<style>
+  p { max-width: 300px; }
+</style>
+
+<script type="text/javascript">
+
+  if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) < 7))
+  window.attachEvent("onresize", setMaxWidth);
+	
+  function setMaxWidth() {
+  var paragraphs = document.getElementsByTagName("p");
+  for ( var i = 0; i < paragraphs.length; i++ ) 
+  paragraphs[i].style.width = ( document.body.clientWidth > 300 ? "300px" : "auto" );
+
+</script>
+```
 
 ## CSSをドキュメントヘッドに含める
 

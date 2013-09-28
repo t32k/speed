@@ -9,7 +9,7 @@ Page Speedはクライアント側からの観点でパフォーマンスを評�
 + [キャッシュの最適化](/docs/best-practices/caching.md) - アプリケーションのデータとロジックをネットワークから完全に分離させる
 + [ラウンドトリップ回数を最小にする](/docs/best-practices/rtt.md) - リクエスト-レスポンスの一連のサイクルの回数を減らす
 + [リクエストオーバーヘッドの縮小化](/docs/best-practices/caching.md) - アップロードサイズを減らす
-+ [読み込みサイズの減量](/docs/best-practices/payload.md) - レスポンス、ダウンロード、キャッシュ化されたページのサイズを減らす
++ [ペイロードサイズの縮小化](/docs/best-practices/payload.md) - レスポンス、ダウンロード、キャッシュ化されたページのサイズを減らす
 + [ブラウザレンダリングの最適化](/docs/best-practices/rendering.md) - ブラウザのページレイアウト改善
 + [モバイルのための最適化](/docs/best-practices/mobile.md) - モバイル端末・ネットワーク特有のチューニング
 

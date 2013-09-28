@@ -1,4 +1,4 @@
-# ペイロードサイズの縮小
+# ペイロードサイズの縮小化
 
 毎回のサーバーレスポンスで送信されるデータ量は、特に低帯域エリアでは、アプリケーションのレイテンシーを大きく増加させる。In addition to the network cost of the actual bytes transmitted, there is also a penalty incurred for crossing an IP packet boundary.  (The maximum packet size, or Maximum Transmission Unit (MTU), is 1500 bytes on an Ethernet network, but varies on other types of networks.) 
 
