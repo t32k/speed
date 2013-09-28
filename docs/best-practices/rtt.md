@@ -1,4 +1,4 @@
-# Minimize round-trip times
+# ラウンドトリップ回数を最小にする
 
 Round-trip time (RTT) is the time it takes for a client to send a request and the server to send a response over the network, not including the time required for data transfer. That is, it includes the back-and-forth time on the wire, but excludes the time to fully download the transferred bytes (and is therefore unrelated to bandwidth). For example, for a browser to initiate a first-time connection with a web server, it must incur a minimum of 3 RTTs: 1 RTT for DNS name resolution; 1 RTT for TCP connection setup; and 1 RTT for the HTTP request and first byte of the HTTP response. Many web pages require dozens of RTTs.
 
@@ -6,14 +6,14 @@ RTTs vary from less than one millisecond on a LAN to over one second in the wors
 
 + Minimize DNS lookups
 + [リダイレクトの回数を減らす](#リダイレクトの回数を減らす)
-+ Avoid bad requests
++ [誤りのあるリクエストを送信しない](#誤りのあるリクエストを送信しない)
 + Combine external JavaScript
 + Combine external CSS
 + [CSSスプライトに画像をまとめる](#CSSスプライトに画像をまとめる)
-+ Optimize the order of styles and scripts
++ [スタイルシートとスクリプトの順序を最適化する](#スタイルシートとスクリプトの順序を最適化する)
 + Avoid document.write
-+ CSS @import を使用しない
-+ Prefer asynchronous resources
++ [CSS @importを使用しない](#CSS @importを使用しない)
++ [非同期リソースを使用する](#非同期リソースを使用する)
 + Parallelize downloads across hostnames
 
 
@@ -107,21 +107,20 @@ __JavaScriptまたはmetaリダイレクトではなく、HTTPリダイレクト
 + Apache [URL Rewriting Guide](http://apache.org/docs/2.2/rewrite/) では、`mod_rewrite`を用いた内部リライトについて議論されている
 
 
-## Avoid bad requests
-
+## 誤りのあるリクエストを送信しない
 
 ### 概要
 
-Removing "broken links", or requests that result in 404/410 errors, avoids wasteful requests.
+壊れたリンクまたは404/410エラーを返すリクエストを取り除き、無駄なリクエストを避ける。
 
 ### 詳細
 
-As your website changes over time, it's inevitable that resources will be moved and deleted. If you don't update your frontend code accordingly, the server will issue 404 "Not found" or 410 "Gone" responses. These are wasteful, unnecessary requests that lead to a bad user experience and make your site look unprofessional. And if such requests are for resources that can block subsequent browser processing, such as JS or CSS files, they can virtually "crash" your site. In the short term, you should scan your site for such links with a link checking tool, such as the crawl errors tool in Google's Webmaster Tools, and fix them. Long term, your application should have a way of updating URL references whenever resources change their location.
+Webサイトは時間とともに変化するものなので、リソースのURLが変更になったり削除されたりすることは避けられないことだ。それにともなってフロントエンドのコードもアップデートしなければ、サーバーは404 Not Foundもしくは410 Goneレスポンスを返すことになるだろう。これらは無駄であり、悪いユーザー体験を引き起こし、素人くさい印象を与える不要なリクエストである。JSやCSSファイルのようなリソースをリクエストする場合にこのような状態になるとブラウザの処理をブロックすることになる、事実上サイトをクラッシュさせているようなものだ。短期的には、[Googleウェブマスターツール](http://www.google.com/webmasters/)のクロールエラーのようなものでリンクをチェックすべきです。長期的には、アプリケーションのリソースのロケーションが変更になるたびに、URLの参照先を更新すべきだろう。
 
 ### 推奨
 
-__Avoid using redirects to handle broken links.__  
-Wherever possible, you should update the links to resources that have moved, or delete those links if the resources have been removed. Avoid using HTTP redirects to send users to the requested resources, or to serve a substitute "suggestion" page. As described above, redirects also slow down your site, and are better to avoid as much as possible.
+__壊れたリンクのためにリダイレクトを使用するのは避ける __  
+可能な限り、リソースが引越ししている場合はリンクを更新し、削除されている場合はリンクも削除すべきである。ユーザーに対してリクエストしたリソースにリダイレクトしたり、代替ページを提供するのは避けるべきである。前述のとおり、リダイレクトはサイトを遅くするので可能な限り避けたほうが賢明だ。
 
 
 ## Combine external JavaScript
@@ -222,87 +221,6 @@ __似たようなカラーパレットの画像をスプライトする __
 256色以上のスプライト画像はパレットタイプカラーの代わりにPNG trueカラータイプになる。これはスプライト画像のサイズ増加を意味し、最適なスプライトは同じ256色カラーパレット内の画像をまとめることだ。もし、カラーにばらつきがあるのなら、256色に減色してからスプライトすることを考慮する。
 
 
-
-## CSS @import を使用しない
-
-### 概要
-
-外部CSSファイル内でCSS @importを使用するとページ読み込みに遅延を発生させる。
-
-### 詳細
-
-CSS [@import](http://www.w3.org/TR/CSS2/cascade.html#at-import)を使用するとスタイルシートのインポートが可能となる。外部スタイルシート内で@importが使用されると、ブラウザーはスタイルシートを並列ダウンロードできない。これはページ読み込みに対して余計なラウンドトリップタイムを発生させる。例えば、`first.css`内に以下のコードが含まているとする：
-
-{% highlight html %}
-@import url("second.css")
-{% endhighlight %}
-
-ブラウザーはダウンロードする必要のある`second.css`を見つける前に、`first.css`のダウンロード、パース、実行をしてしまう。
-
-### 推奨
-
-__@importの代わりに`<link>`タグを使用する __  
-各スタイルシートの@importの代わりに`<link>`タグを使用する。これでブラウザーはスタイルシートを並列にダウンロードでき、結果的にページ読み込み時間を短縮できる。 
-
-```html
-<link rel="stylesheet" href="first.css">
-<link rel="stylesheet" href="second.css">
-```
-
-
-
-## 非同期リソースを使用する
-
-### 概要
-
-リソースを非同期に読み込むことでページ読み込みのブロッキングを防ぐことができる。
-
-### 詳細
-
-基本的にブラウザーがScriptタグをパースするときは、そのスクリプトの後続のHTMLがレンダリング処理は、ダウンロード、パース、実行を待たなければならない。けれども非同期スクリプトの場合、ブラウザーはそのスクリプト以降のHTMLのパース・レンダリングをスクリプトの実行完了を待たずに続けることができる。スクリプトが非同期に読み込まれるとき、それは可能な限りすぐに読みこむが、実行はブラウザーのUIスレッドがビジーな状態（ページをレンダリングしているような）でなくなるまで、遅延される。
-
-### 推奨
-
-アクセス解析のようなページの初期表示に必要のないJavaScriptは、非同期でに読み込まれるべきだ。ファーストビュー以降のページ構築に必要なスクリプトのような、ページ上であまり重要ではないコンテンツ表示に必要なスクリプトもまた、非同期で読み込んだほうがいいだろう。
-
-__DOM要素でscriptを生成する __  
-DOM要素でscriptを生成するすれば、最近のブラウザーで非同期に読みこむことができる。
-
-```html
-<script>
-	var node = document.createElement('script');
-	node.type = 'text/javascript';
-	node.async = true;
-	node.src = 'example.js';
-	// Now insert the node into the DOM, perhaps using insertBefore()
-</script>
-```
-
-async属性も指定しDOM要素でscriptを生成する方法の場合、Internet Explorer, Firefox, Chrome, Safariで非同期読み込みが可能だ。反対に、この文章執筆時点では、単純にHTMLの`<script>`タグにasync属性を追加した読み込みでは、ChromeまたはFirefox 3.6以上のブラウザでしか非同期読み込みできず、他のブラウザーはasync属性をサポートしていない。
-
-__Google アナリティクスを非同期で読み込む__  
-新しいバージョンのGoogle アナリティクススニペットも非同期読み込みに対応している。古いトラッキングスニペットを使用している場合は、[新しい非同期バージョンにアップデート](https://developers.google.com/analytics/devguides/collection/gajs/asyncTracking)すべきだ。
-
-
-
-## 誤りのあるリクエストを送信しない
-
-### 概要
-
-壊れたリンクまたは404/410エラーを返すリクエストを取り除き、無駄なリクエストを避ける。
-
-### 詳細
-
-Webサイトは時間とともに変化するものなので、リソースのURLが変更になったり削除されたりすることは避けられないことだ。それにともなってフロントエンドのコードもアップデートしなければ、サーバーは404 Not Foundもしくは410 Goneレスポンスを返すことになるだろう。これらは無駄であり、悪いユーザー体験を引き起こし、素人くさい印象を与える不要なリクエストである。JSやCSSファイルのようなリソースをリクエストする場合にこのような状態になるとブラウザの処理をブロックすることになる、事実上サイトをクラッシュさせているようなものだ。短期的には、[Googleウェブマスターツール](http://www.google.com/webmasters/)のクロールエラーのようなものでリンクをチェックすべきです。長期的には、アプリケーションのリソースのロケーションが変更になるたびに、URLの参照先を更新すべきだろう。
-
-### 推奨
-
-__壊れたリンクのためにリダイレクトを使用するのは避ける __  
-可能な限り、リソースが引越ししている場合はリンクを更新し、削除されている場合はリンクも削除すべきである。ユーザーに対してリクエストしたリソースにリダイレクトしたり、代替ページを提供するのは避けるべきである。前述のとおり、リダイレクトはサイトを遅くするので可能な限り避けたほうが賢明だ。
-
-
-
-
 ## スタイルシートとスクリプトの順序を最適化する
 
 ### 概要
@@ -374,6 +292,163 @@ __できる限り、外部スクリプトは外部スタイルシートの後に
 
 __できる限り、インラインスクリプトは他のリソースの後に置く __  
 すべてのリソースの後にインラインスクリプトを置くことは、他のダウンロードのブロッキングを防ぎ、プログレッシブレンダリングを可能とする。しかしながら、”他のリソース”が外部JSファイルで、インラインスクリプトに依存している場合は無理だろう。この場合、この場合CSSファイルのマにインラインスクリプトを移せば最適だ。
+
+
+## Avoid document.write
+
+### Overview
+
+Using document.write() to fetch external resources, especially early in the document, can significantly increase the time it takes to display a web page.
+
+### Details
+
+Modern browsers use speculative parsers to more efficiently discover external resources referenced in HTML markup. These speculative parsers help to reduce the time it takes to load a web page. Since speculative parsers are fast and lightweight, they do not execute JavaScript. Thus, using JavaScript's document.write() to fetch external resources makes it impossible for the speculative parser to discover those resources, which can delay the download, parsing, and rendering of those resources.
+
+Using document.write() from external JavaScript resources is especially expensive, since it serializes the downloads of the external resources. The browser must download, parse, and execute the first external JavaScript resource before it executes the document.write() that fetches the additional external resources. For instance, if external JavaScript resource first.js contains the following content:
+
+
+`document.write('<script src="second.js"><\/script>');`
+
+The download of first.js and second.js will be serialized in all browsers. Using one of the recommended techniques described below can reduce blocking and serialization of these resources, which in turn reduces the time it takes to display the page.
+
+
+### Recommendations
+
+__Declare resources directly in HTML markup__  
+Declaring resources in HTML markup allows the speculative parser to discover those resources. For instance, instead of calling document.write from an HTML `<script>` tag like so:
+
+```html
+<html>
+<body>
+<script>
+document.write('<script src="example.js"><\/script>');
+</script>
+</body>
+</html>
+```
+
+insert the document.written script tag directly into the HTML:
+
+```html
+<html>
+<body>
+<script src="example.js"></script>
+</body>
+</html>
+```
+
+__Prefer asynchronous resources__
+In some cases, it may not be possible to declare resources directly in HTML. For instance, if the URL of the resource is determined dynamically on the client, JavaScript must be used to construct that URL. In these cases, try to use asynchronous loading techniques.
+
+__Use "friendly iframes"__
+In some cases, such as optimization of legacy code that cannot be loaded using other recommended techniques, it may not be possible to avoid document.write. In these cases, friendly iframes can be used to avoid blocking the main page.
+A friendly iframe is an iframe on the same origin as its parent document. Resources referenced in friendly iframes load in parallel with resources referenced on the main page. Thus, calling document.write in a friendly iframe does not block the parent page from loading. Despite not blocking the parent page, using document.write in a friendly iframe can still slow down the loading of the content in that iframe, so other recommended techniques should be preferred over the "friendly iframe" technique.
+
+
+## CSS @importを使用しない
+
+### 概要
+
+外部CSSファイル内でCSS @importを使用するとページ読み込みに遅延を発生させる。
+
+### 詳細
+
+CSS [@import](http://www.w3.org/TR/CSS2/cascade.html#at-import)を使用するとスタイルシートのインポートが可能となる。外部スタイルシート内で@importが使用されると、ブラウザーはスタイルシートを並列ダウンロードできない。これはページ読み込みに対して余計なラウンドトリップタイムを発生させる。例えば、`first.css`内に以下のコードが含まているとする：
+
+{% highlight html %}
+@import url("second.css")
+{% endhighlight %}
+
+ブラウザーはダウンロードする必要のある`second.css`を見つける前に、`first.css`のダウンロード、パース、実行をしてしまう。
+
+### 推奨
+
+__@importの代わりに`<link>`タグを使用する __  
+各スタイルシートの@importの代わりに`<link>`タグを使用する。これでブラウザーはスタイルシートを並列にダウンロードでき、結果的にページ読み込み時間を短縮できる。 
+
+```html
+<link rel="stylesheet" href="first.css">
+<link rel="stylesheet" href="second.css">
+```
+
+
+## 非同期リソースを使用する
+
+### 概要
+
+リソースを非同期に読み込むことでページ読み込みのブロッキングを防ぐことができる。
+
+### 詳細
+
+基本的にブラウザーがScriptタグをパースするときは、そのスクリプトの後続のHTMLがレンダリング処理は、ダウンロード、パース、実行を待たなければならない。けれども非同期スクリプトの場合、ブラウザーはそのスクリプト以降のHTMLのパース・レンダリングをスクリプトの実行完了を待たずに続けることができる。スクリプトが非同期に読み込まれるとき、それは可能な限りすぐに読みこむが、実行はブラウザーのUIスレッドがビジーな状態（ページをレンダリングしているような）でなくなるまで、遅延される。
+
+### 推奨
+
+アクセス解析のようなページの初期表示に必要のないJavaScriptは、非同期でに読み込まれるべきだ。ファーストビュー以降のページ構築に必要なスクリプトのような、ページ上であまり重要ではないコンテンツ表示に必要なスクリプトもまた、非同期で読み込んだほうがいいだろう。
+
+__DOM要素でscriptを生成する __  
+DOM要素でscriptを生成するすれば、最近のブラウザーで非同期に読みこむことができる。
+
+```html
+<script>
+	var node = document.createElement('script');
+	node.type = 'text/javascript';
+	node.async = true;
+	node.src = 'example.js';
+	// Now insert the node into the DOM, perhaps using insertBefore()
+</script>
+```
+
+async属性も指定しDOM要素でscriptを生成する方法の場合、Internet Explorer, Firefox, Chrome, Safariで非同期読み込みが可能だ。反対に、この文章執筆時点では、単純にHTMLの`<script>`タグにasync属性を追加した読み込みでは、ChromeまたはFirefox 3.6以上のブラウザでしか非同期読み込みできず、他のブラウザーはasync属性をサポートしていない。
+
+__Google アナリティクスを非同期で読み込む__  
+新しいバージョンのGoogle アナリティクススニペットも非同期読み込みに対応している。古いトラッキングスニペットを使用している場合は、[新しい非同期バージョンにアップデート](https://developers.google.com/analytics/devguides/collection/gajs/asyncTracking)すべきだ。
+
+
+
+## Parallelize downloads across hostnames
+
+### Overview
+
+Serving resources from two different hostnames increases parallelization of downloads.
+
+### Details
+
+The HTTP 1.1 specification (section 8.1.4) states that browsers should allow at most two concurrent connections per hostname (although newer browsers allow more than that: see Browserscope for a list). If an HTML document contains references to more resources (e.g. CSS, JavaScript, images, etc.) than the maximum allowed on one host, the browser issues requests for that number of resources, and queues the rest. As soon as some of the requests finish, the browser issues requests for the next number of resources in the queue. It repeats the process until it has downloaded all the resources. In other words, if a page references more than X external resources from a single host, where X is the maximum connections allowed per host, the browser must download them sequentially, X at a time, incurring 1 RTT for every X resources. The total round-trip time is N/X, where N is the number of resources to fetch from a host. For example, if a browser allows 4 concurrent connections per hostname, and a page references 100 resources on the same domain, it will incur 1 RTT for every 4 resources, and a total download time of 25 RTTs.
+
+You can get around this restriction by serving resources from multiple hostnames. This "tricks" the browser into parallelizing additional downloads, which leads to faster page load times. However, using multiple concurrent connections can cause increased CPU usage on the client, and introduces additional round-trip time for each new TCP connection setup, as well as DNS lookup latency for clients with empty caches. Therefore, beyond a certain number of connections, this technique can actually degrade performance. The optimal number of hosts is generally believed to be between 2 and 5, depending on various factors such as the size of the files, bandwidth and so on. If your pages serve large numbers of static resources, such as images, from a single hostname, consider splitting them across multiple hostnames using DNS aliases. We recommend this technique for any page that serves more than 10 resources from a single host.  (For pages that serve fewer resources than this, it's overkill.)  
+To set up additional hostnames, you can configure subdomains in your DNS database as CNAME records that point to a single A record, and then configure your web server to serve resources from the multiple hosts. For even better performance, if all or some of the resources don't make use of cookie data (which they usually don't), consider making all or some of the hosts subdomains of a cookieless domain. Be sure to evenly allocate all the resources to among the different hostnames, and in the pages that reference the resources, use the CNAMEd hostnames in the URLs.
+
+If you host your static files using a CDN, your CDN may support serving these resources from more than one hostname. Contact your CDN to find out.
+
+
+### Recommendations
+
+__Balance parallelizable resources across hostnames.__   
+Requests for most static resources, including images, CSS, and other binary objects, can be parallelized. Balance requests to all these objects as much as possible across the hostnames. If that's not possible, as a rule of thumb, try to ensure that no one host serves more than 50% more than the average across all hosts. So, for example, if you have 40 resources, and 4 hosts, each host should serve ideally 10 resources; in the worst case, no host should serve more than 15. If you have 100 resources and 4 hosts, each host should serve 25 resources; no one host should serve more than 38.
+On the other hand, many browsers do not download JavaScript files in parallel*, so there is no benefit from serving them from multiple hostnames. So when balancing resources across hostnames, remove any JS files from your allocation equation.
+
+*For a list of browsers that do and do not support parallel downloading of JavaScript files, see Browserscope.
+
+__Prevent external JS from blocking parallel downloads.__  
+When downloading external JavaScript, many browsers block downloads of all other types of files on all hostnames, regardless of the number of hostnames involved. To prevent JS downloads from blocking other downloads (and to speed up the JS downloads themselves):
++ Minimize the number of external JavaScript files referenced by a single HTML document.
++ Reference them in the correct order so that that they are downloaded after other resources.
+
+__Always serve a resource from the same hostname.__  
+To improve the browser cache hit rate, the client should always fetch a resource from the same hostname. Make sure all page references to the same resource use the same URL.
+
+
+### Example
+
+To display its map images, Google Maps delivers multiple small images called "tiles", each of which represents a small portion of the larger map. The browser assembles the tiles into the complete map image as it loads each one. For this process to appear seamless, it's important that the tiles download in parallel and as quickly as possible. To enable the parallel download, the application assigns the tile images to four hostnames, mt0, mt1, mt2 and mt3. So, for example, in Firefox 3.0+, which allows up to 6 parallel connections per hostname, up to 24 requests for map tiles could be made in parallel. The following screen shot from Firebug's Net panel shows this effect in Firefox: 15 requests, across the hostnames mt[0-3] are made in parallel:
+
+![fig]()
+
+### Additional resources
+
++ For details on using DNS aliases to parallelize downloads, see the article Using CNAMES to get around browser connection limits. 
++ For analysis of the performance improvements gained by using this technique, see the article Optimizing Page Load Time.
 
 --
 

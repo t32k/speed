@@ -1,6 +1,8 @@
-# Minimize payload size
+# ペイロードサイズの縮小
 
-The amount of data sent in each server response can add significant latency to your application, especially in areas where bandwidth is constrained. In addition to the network cost of the actual bytes transmitted, there is also a penalty incurred for crossing an IP packet boundary. (The maximum packet size, or Maximum Transmission Unit (MTU), is 1500 bytes on an Ethernet network, but varies on other types of networks.) Unfortunately, since it's difficult to know which bytes will cross a packet boundary, the best practice is to simply reduce the number of packets your server transmits, and strive to keep them under 1500 bytes wherever possible.
+毎回のサーバーレスポンスで送信されるデータ量は、特に低帯域エリアでは、アプリケーションのレイテンシーを大きく増加させる。In addition to the network cost of the actual bytes transmitted, there is also a penalty incurred for crossing an IP packet boundary.  (The maximum packet size, or Maximum Transmission Unit (MTU), is 1500 bytes on an Ethernet network, but varies on other types of networks.) 
+
+ Unfortunately, since it's difficult to know which bytes will cross a packet boundary, the best practice is to simply reduce the number of packets your server transmits, and strive to keep them under 1500 bytes wherever possible.
 
 Minimizing the payload size of both dynamic and static resources can reduce network latency significantly. In addition, for scripts that are cached, cutting down their byte size speeds up the time the browser takes to parse and execute code needed to render the page.
 
@@ -52,11 +54,11 @@ Webでサポートされている画像形式、同様にビデオ、PDFのよ�
 
 ## Remove unused CSS
 
-### Overview
+### 概要
 
 Removing or deferring style rules that are not used by a document avoid downloads unnecessary bytes and allow the browser to start rendering sooner.
 
-### Details
+### 詳細
 
 Before a browser can begin to render a web page, it must download and parse any stylesheets that are required to lay out the page. Even if a stylesheet is in an external file that is cached, rendering is blocked until the browser loads the stylesheet from disk. In addition, once the stylesheet is loaded, the browser's CSS engine has to evaluate every rule contained in the file to see if the rule applies to the current page. Often, many web sites reuse the same external CSS file for all of their pages, even if many of the rules defined in it don't apply to the current page.
 
@@ -64,14 +66,13 @@ The best way to minimize the latency caused by stylesheet loading and rendering 
 
 Tip: When you run Page Speed against a page referencing CSS files, it identifies all CSS rules that don't apply to that page.
 
-### Recommendations
+### 推奨
 
-Remove any inline style blocks containing CSS that is not used by the current page.
++ Remove any inline style blocks containing CSS that is not used by the current page.
 Minify CSS.
-If your site uses external CSS files shared among multiple pages, consider splitting them into smaller files containing rules for specific pages.
-If a page references style rules that are not needed right at startup, put them in a separate .css file and defer loading of the file until the onload event is fired.
-If you use JavaScript to generate styles, be sure that those functions aren't called from pages that don't use those styles. This may require some refactoring of JS code.
-
++ If your site uses external CSS files shared among multiple pages, consider splitting them into smaller files containing rules for specific pages.
++ If a page references style rules that are not needed right at startup, put them in a separate .css file and defer loading of the file until the onload event is fired.
++ If you use JavaScript to generate styles, be sure that those functions aren't called from pages that don't use those styles. This may require some refactoring of JS code.
 
 
 ## JavaScript を縮小する
@@ -124,11 +125,11 @@ HTMLの縮小化は、JS/CSSの縮小化と同様のメリットがあります�
 
 ## Defer loading of JavaScript
 
-### Overview
+### 概要
 
 Deferring loading of JavaScript functions that are not called at startup reduces the initial download size, allowing other resources to be downloaded in parallel, and speeding up execution and rendering time.
 
-### Details
+### 詳細
 
 Like stylesheets, scripts must be downloaded, parsed, and executed before the browser can begin to render a web page. Again, even if a script is contained in an external file that is cached, processing of all elements below the script is blocked until the browser loads the code from disk and executes it. However, for some browsers, the situation is worse than for stylesheets: while JavaScript is being processed, the browser blocks all other resources from being downloaded. For AJAX-type applications that use many bytes of JavaScript code, this can add considerable latency.
 

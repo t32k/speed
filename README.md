@@ -22,7 +22,7 @@ Photo credit: ["Going nowhere fast" | Flickr](http://www.flickr.com/photos/thatg
 	+ ★[キャッシュの最適化](/docs/best-practices/caching.md)
 	+ [ラウンドトリップ回数を最小にする](/docs/best-practices/rtt.md)
 	+ [リクエストのオーバーヘッドの縮小化 ](/docs/best-practices/request.md)
-	+ [読み込みサイズの減量](/docs/best-practices/payload.md)
+	+ [ペイロードサイズの縮小](/docs/best-practices/payload.md)
 	+ [ブラウザレンダリングの最適化](/docs/best-practices/rendering.md)
 	+ ★[モバイルのための最適化](/docs/best-practices/mobile.md)
 
